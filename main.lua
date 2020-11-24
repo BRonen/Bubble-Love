@@ -1,19 +1,29 @@
-
+function love.keypressed(key)
+    if key == "escape" then love.event.push('quit') end
+end
 
 function love.load()
   Array = {}
-  for i=1,100 do
+  for i=1,50 do
+    Array[i] = math.random(1, 400)
+  end
 end
 
 function love.draw()
-  
+  for i=1,#Array do
+    love.graphics.rectangle( "fill", i*7, 32, 6, Array[i] )
+  end
 end
 
-Timer = 0
-
+Index = 0
 function love.update(dt)
-  Timer = Timer + dt
-  if Timer >= 0.5 then
-    Timer = 0
+  Index = Index + 1
+  if Index >= #Array  then
+    Index = 1
+  end
+  if Array[Index] > Array[Index + 1] then
+    local aux = Array[Index]
+    Array[Index] = Array[Index + 1]
+    Array[Index + 1] = aux
   end
 end
